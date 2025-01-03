@@ -27,6 +27,7 @@ class CreateUserService {
         }
 
         const passwordHash = await hash(password, 8)
+        console.log('about to create a user')
 
         const user = await prismaClient.user.create({
             data: {
@@ -40,6 +41,8 @@ class CreateUserService {
                 email: true,
             }
         })
+
+        console.log('created user', user)
 
         return user;
     }

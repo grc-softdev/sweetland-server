@@ -3,6 +3,7 @@ import { CreateUserService } from "../../services/user/CreateUserService";
 
 class CreateUserController{
     async handle(req: Request, res: Response) {
+        console.log('running request, with', req)
         //posso repassar as informações desconstruido o obj
         const { name, email, password } = (req.body)
         //inicializa o serviço
