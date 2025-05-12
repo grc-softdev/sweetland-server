@@ -12,15 +12,21 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AuthUserController = void 0;
 const AuthUserServices_1 = require("../../services/user/AuthUserServices");
 class AuthUserController {
-    handle(req, res) {
+    handle(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             const { email, password } = req.body;
             const authUserService = new AuthUserServices_1.AuthUserService();
-            const auth = yield authUserService.execute({
-                email,
-                password,
-            });
-            return res.json(auth);
+            try {
+                const result = yield authUserService.execute({ email, password });
+                if ("error" in result) {
+                    return res.status(400).json({ error: result.error });
+                }
+                return res.json(result);
+            }
+            catch (err) {
+                console.error("Authentication error:", err);
+                return next(err);
+            }
         });
     }
 }

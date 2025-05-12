@@ -18,11 +18,9 @@ const bcrypt_1 = require("bcrypt");
 class CreateUserService {
     execute(_a) {
         return __awaiter(this, arguments, void 0, function* ({ name, email, password }) {
-            // verificar se ele enviou um email
             if (!email) {
                 throw new Error("Email incorrect");
             }
-            // verificar se esse email já está cadastrado na plataforma
             const userAlreadyExists = yield prisma_1.default.user.findFirst({
                 where: {
                     email: email
@@ -32,6 +30,7 @@ class CreateUserService {
                 throw new Error("User already exists");
             }
             const passwordHash = yield (0, bcrypt_1.hash)(password, 8);
+            console.log('about to create a user');
             const user = yield prisma_1.default.user.create({
                 data: {
                     name: name,
@@ -44,6 +43,7 @@ class CreateUserService {
                     email: true,
                 }
             });
+            console.log('created user', user);
             return user;
         });
     }

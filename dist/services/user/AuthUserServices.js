@@ -19,7 +19,6 @@ const jsonwebtoken_1 = require("jsonwebtoken");
 class AuthUserService {
     execute(_a) {
         return __awaiter(this, arguments, void 0, function* ({ email, password }) {
-            //console.log(email)
             const user = yield prisma_1.default.user.findFirst({
                 where: {
                     email: email,
@@ -28,17 +27,14 @@ class AuthUserService {
             if (!user) {
                 throw new Error(" Incorrect user/password");
             }
-            // verificar se a senha está correta
             const passwordMatch = yield (0, bcrypt_1.compare)(password, user.password);
             if (!passwordMatch) {
                 throw new Error("incorrect user/password");
             }
-            // gerar um token jwt e devolver os dados para o usuário. / logar
             const token = (0, jsonwebtoken_1.sign)({
                 name: user.name,
                 email: user.email,
             }, process.env.JWT_SECRET, {
-                //enviando o id do usuario pro isAuthenticated
                 subject: user.id,
                 expiresIn: "30d",
             });

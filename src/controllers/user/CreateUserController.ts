@@ -5,10 +5,10 @@ class CreateUserController {
   async handle(req: Request, res: Response) {
     try {
       const { name, email, password } = req.body;
-
+      console.log(req.body)
       const createUserService = new CreateUserService();
       const user = await createUserService.execute({ name, email, password });
-
+      console.log("creating user")
       return res.status(201).json(user); // Send a 201 (Created) status code
     } catch (error: any) {
       console.error(error.message);
@@ -19,6 +19,7 @@ class CreateUserController {
       }
 
       // For unexpected errors
+
       return res.status(500).json({ error: "Internal Server Error" });
     }
   }

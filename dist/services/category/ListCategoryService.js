@@ -21,7 +21,7 @@ class ListCategoryService {
                 select: {
                     id: true,
                     name: true,
-                }
+                },
             });
             return category;
         });

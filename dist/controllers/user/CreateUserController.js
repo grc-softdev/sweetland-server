@@ -14,16 +14,23 @@ const CreateUserService_1 = require("../../services/user/CreateUserService");
 class CreateUserController {
     handle(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            //posso repassar as informações desconstruido o obj
-            const { name, email, password } = (req.body);
-            //inicializa o serviço
-            const createUserService = new CreateUserService_1.CreateUserService();
-            //executa o serviço - mas pra executar ele precisa esperar pra enviar os dados
-            const user = yield createUserService.execute({
-                name, email, password
-            });
-            //envia o serviço
-            return res.json(user);
+            try {
+                const { name, email, password } = req.body;
+                console.log(req.body);
+                const createUserService = new CreateUserService_1.CreateUserService();
+                const user = yield createUserService.execute({ name, email, password });
+                console.log("creating user");
+                return res.status(201).json(user); // Send a 201 (Created) status code
+            }
+            catch (error) {
+                console.error(error.message);
+                // Handle known errors gracefully
+                if (error.message === "Email incorrect" || error.message === "User already exists") {
+                    return res.status(400).json({ error: error.message });
+                }
+                // For unexpected errors
+                return res.status(500).json({ error: "Internal Server Error" });
+            }
         });
     }
 }

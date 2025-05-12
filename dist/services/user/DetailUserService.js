@@ -21,7 +21,6 @@ class DetailUserService {
                 where: {
                     id: user_id
                 },
-                //incluído para selecionar oque retorna
                 select: {
                     id: true,
                     name: true,
