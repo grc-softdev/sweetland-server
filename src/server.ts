@@ -5,8 +5,6 @@ import cors from 'cors';
 import path from 'path'
 import fileUpload from 'express-fileupload';
 
-// o cors foi habilitado para que qualquer ip consiga fazer a requisiçao
-
 const app = express();
 
 app.use(express.json())
@@ -16,12 +14,11 @@ app.use(fileUpload({
 }))
 app.use(router);
 
-//Acessar url da imagem ex: localhost:3333/files.nomes-imagem.png
+//access image url ex: localhost:3333/files.image-name.png
  app.use('/files',  express.static(path.resolve(__dirname, '..', 'tmp')))
 
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
     if(err instanceof Error) {
-        // se for uma instancia do tipo erro
         return res.status(400).json({
             error: err.message
         })
@@ -33,4 +30,8 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
     })
 })
 
-app.listen(process.env.PORT, () => console.log('Servidor online!'))
+app.listen(process.env.PORT, () => console.log('online!'))
+
+// app.listen(3333, '0.0.0.0', () => {
+//    console.log('Server is running on http://0.0.0.0:3333');
+// });
