@@ -9,11 +9,11 @@ class CreateUserController {
       const createUserService = new CreateUserService();
       const user = await createUserService.execute({ name, email, password });
       console.warn("creating user")
-      return res.status(201).json(user); // Send a 201 (Created) status code
+      return res.status(201).json(user);
     } catch (error: any) {
 
       console.error(error.message);
-      // Handle known errors gracefully
+     
       if (error.message === "Email incorrect" || error.message === "User already exists") {
         return res.status(400).json({ error: error.message });
       }
