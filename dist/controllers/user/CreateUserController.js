@@ -16,10 +16,10 @@ class CreateUserController {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const { name, email, password } = req.body;
-                console.log(req.body);
+                console.warn(req.body);
                 const createUserService = new CreateUserService_1.CreateUserService();
                 const user = yield createUserService.execute({ name, email, password });
-                console.log("creating user");
+                console.warn("creating user");
                 return res.status(201).json(user); // Send a 201 (Created) status code
             }
             catch (error) {
