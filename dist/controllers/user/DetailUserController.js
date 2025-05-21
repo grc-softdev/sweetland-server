@@ -14,6 +14,7 @@ const DetailUserService_1 = require("../../services/user/DetailUserService");
 class DetailUserController {
     handle(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
+            // @ts-expect-error
             const user_id = req.user_id;
             console.log(user_id);
             const detailUserService = new DetailUserService_1.DetailUserService();

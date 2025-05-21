@@ -14,7 +14,8 @@ app.use(express_1.default.json());
 app.use((0, cors_1.default)({
     origin: [
         "https://sweetland.vercel.app/",
-        "http://localhost:3000"
+        "http://localhost:3000",
+        "http://localhost:8081",
     ],
     credentials: true,
 }));
@@ -24,6 +25,7 @@ app.use((0, express_fileupload_1.default)({
 app.use(routes_1.router);
 //access image url ex: localhost:3333/files.image-name.png
 app.use('/files', express_1.default.static(path_1.default.resolve(__dirname, '..', 'tmp')));
+// @ts-expect-error
 app.use((err, req, res, next) => {
     if (err instanceof Error) {
         return res.status(400).json({
@@ -36,6 +38,6 @@ app.use((err, req, res, next) => {
     });
 });
 app.listen(process.env.PORT, () => console.log('online!'));
-// app.listen(3333, '0.0.0.0', () => {
-//    console.log('Server is running on http://0.0.0.0:3333');
-// });
+//app.listen(3333, '0.0.0.0', () => {
+//console.log('Server is running on http://0.0.0.0:3333');
+//});

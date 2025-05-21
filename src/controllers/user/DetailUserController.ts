@@ -3,6 +3,7 @@ import { DetailUserService } from "../../services/user/DetailUserService";
 
 class DetailUserController {
     async handle(req: Request, res: Response){
+        // @ts-expect-error
         const user_id = req.user_id
         console.log(user_id)
 

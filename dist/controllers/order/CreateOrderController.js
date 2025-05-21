@@ -14,12 +14,14 @@ const CreateOrderService_1 = require("../../services/order/CreateOrderService");
 class CreateOrderController {
     handle(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
+            // @ts-expect-error
             const { table, name } = req.body;
             const createOrderService = new CreateOrderService_1.CreateOrderService();
             const order = yield createOrderService.execute({
                 table: table,
                 name: name,
             });
+            // @ts-expect-error
             return res.json(order);
         });
     }

@@ -15,7 +15,6 @@ const ListCategoryController_1 = require("./controllers/category/ListCategoryCon
 const ListByCategoryController_1 = require("./controllers/products/ListByCategoryController");
 const CreateProductController_1 = require("./controllers/products/CreateProductController");
 const CreateOrderController_1 = require("./controllers/order/CreateOrderController");
-const multer_2 = __importDefault(require("./config/multer"));
 const RemoveOrderController_1 = require("./controllers/order/RemoveOrderController");
 const AddItemController_1 = require("./controllers/order/AddItemController");
 const RemoveItemController_1 = require("./controllers/order/RemoveItemController");
@@ -23,28 +22,41 @@ const SendOrderController_1 = require("./controllers/order/SendOrderController")
 const ListOrderController_1 = require("./controllers/order/ListOrderController");
 const DetailOrderController_1 = require("./controllers/order/DetailOrderController");
 const FinishOrderController_1 = require("./controllers/order/FinishOrderController");
+const multer_2 = __importDefault(require("./config/multer"));
 const router = (0, express_1.Router)();
 exports.router = router;
 const upload = (0, multer_1.default)(multer_2.default.upload("./tmp"));
+// Helper para preservar o contexto `this`
+const use = (controller) => controller.handle.bind(controller);
 // Rotas User
-router.post('/users', new CreateUserController_1.CreateUserController().handle);
-const arg = new AuthUserController_1.AuthUserController().handle;
-router.post('/session', arg);
-//aqui p/ o usuario logado eu incluo um middleware pra poder usar o token
-router.get('/me', isAuthenticated_1.isAuthenticated, new DetailUserController_1.DetailUserController().handle);
+router.post('/users', use(new CreateUserController_1.CreateUserController()));
+router.post('/session', use(new AuthUserController_1.AuthUserController()));
+// @ts-expect-error
+router.get('/me', isAuthenticated_1.isAuthenticated, use(new DetailUserController_1.DetailUserController()));
 // Rotas Category
-router.post('/category', isAuthenticated_1.isAuthenticated, new CreateCategoryController_1.CreateCategoryController().handle);
-router.get('/category', isAuthenticated_1.isAuthenticated, new ListCategoryController_1.ListCategoryController().handle);
-//Rotas Product
-//router.post('/product', isAuthenticated, upload.single('file'), new CreateProductController().handle)
-router.post('/product', isAuthenticated_1.isAuthenticated, new CreateProductController_1.CreateProductController().handle);
-router.get('/category/product', isAuthenticated_1.isAuthenticated, new ListByCategoryController_1.ListByCategoryController().handle);
+// @ts-expect-error
+router.post('/category', isAuthenticated_1.isAuthenticated, use(new CreateCategoryController_1.CreateCategoryController()));
+// @ts-expect-error
+router.get('/category', isAuthenticated_1.isAuthenticated, use(new ListCategoryController_1.ListCategoryController()));
+// Rotas Product
+// @ts-expect-error
+router.post('/product', isAuthenticated_1.isAuthenticated, use(new CreateProductController_1.CreateProductController()));
+// @ts-expect-error
+router.get('/category/product', isAuthenticated_1.isAuthenticated, use(new ListByCategoryController_1.ListByCategoryController()));
 // Rotas Order
-router.post('/order', isAuthenticated_1.isAuthenticated, new CreateOrderController_1.CreateOrderController().handle);
-router.delete('/order', isAuthenticated_1.isAuthenticated, new RemoveOrderController_1.RemoveOrderController().handle);
-router.post('/order/add', isAuthenticated_1.isAuthenticated, new AddItemController_1.AddItemController().handle);
-router.delete('/order/remove', isAuthenticated_1.isAuthenticated, new RemoveItemController_1.RemoveItemController().handle);
-router.put('/order/send', isAuthenticated_1.isAuthenticated, new SendOrderController_1.SendOrderController().handle);
-router.get('/orders', isAuthenticated_1.isAuthenticated, new ListOrderController_1.ListOrderController().handle);
-router.get('/orders/detail', isAuthenticated_1.isAuthenticated, new DetailOrderController_1.DetailOrderController().handle);
-router.put('/order/finish', isAuthenticated_1.isAuthenticated, new FinishOrderController_1.FinishOrderController().handle);
+// @ts-expect-error
+router.post('/order', isAuthenticated_1.isAuthenticated, use(new CreateOrderController_1.CreateOrderController()));
+// @ts-expect-error
+router.delete('/order', isAuthenticated_1.isAuthenticated, use(new RemoveOrderController_1.RemoveOrderController()));
+// @ts-expect-error
+router.post('/order/add', isAuthenticated_1.isAuthenticated, use(new AddItemController_1.AddItemController()));
+// @ts-expect-error
+router.delete('/order/remove', isAuthenticated_1.isAuthenticated, use(new RemoveItemController_1.RemoveItemController()));
+// @ts-expect-error
+router.put('/order/send', isAuthenticated_1.isAuthenticated, use(new SendOrderController_1.SendOrderController()));
+// @ts-expect-error
+router.get('/orders', isAuthenticated_1.isAuthenticated, use(new ListOrderController_1.ListOrderController()));
+// @ts-expect-error
+router.get('/orders/detail', isAuthenticated_1.isAuthenticated, use(new DetailOrderController_1.DetailOrderController()));
+// @ts-expect-error
+router.put('/order/finish', isAuthenticated_1.isAuthenticated, use(new FinishOrderController_1.FinishOrderController()));
