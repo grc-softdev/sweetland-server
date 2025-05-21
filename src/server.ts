@@ -10,7 +10,8 @@ const app = express();
 app.use(express.json())
 app.use(cors({
     origin: [
-        "https://sweetland.vercel.app/",
+        "https://sweetland.vercel.app",
+        "https://sweetland-grcn-projects.vercel.app",
         "http://localhost:3000",
         "http://localhost:8081",
       ],
