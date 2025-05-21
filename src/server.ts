@@ -11,7 +11,8 @@ app.use(express.json())
 app.use(cors({
     origin: [
         "https://sweetland.vercel.app/",
-        "http://localhost:3000"
+        "http://localhost:3000",
+        "http://localhost:8081",
       ],
     credentials: true,
 }))
@@ -36,8 +37,8 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
     })
 })
 
-app.listen(process.env.PORT, () => console.log('online!'))
+// app.listen(process.env.PORT, () => console.log('online!'))
 
-// app.listen(3333, '0.0.0.0', () => {
-//    console.log('Server is running on http://0.0.0.0:3333');
-// });
+app.listen(3333, '0.0.0.0', () => {
+   console.log('Server is running on http://0.0.0.0:3333');
+});
