@@ -7,26 +7,33 @@ import fileUpload from 'express-fileupload';
 
 const app = express();
 
+const allowedOrigins = [
+  "https://sweetland.vercel.app",
+  "https://sweetland-grcn-projects.vercel.app",
+  "http://localhost:3000",
+  "http://localhost:8081",
+];
+
 app.use(cors({
-  origin: [
-    "https://sweetland.vercel.app",
-    "https://sweetland-grcn-projects.vercel.app",
-    "http://localhost:3000",
-    "http://localhost:8081",
-  ],
+  origin: allowedOrigins,
   credentials: true,
 }));
 
-app.options('*', cors({
-  origin: [
-    "https://sweetland.vercel.app",
-    "https://sweetland-grcn-projects.vercel.app",
-    "http://localhost:3000",
-    "http://localhost:8081",
-  ],
-  credentials: true,
-}));
+app.use((req, res, next) => {
+  const origin = req.headers.origin as string;
+  if (allowedOrigins.includes(origin)) {
+    res.setHeader('Access-Control-Allow-Origin', origin);
+  }
+  res.setHeader('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE,OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  res.setHeader('Access-Control-Allow-Credentials', 'true');
 
+  if (req.method === 'OPTIONS') {
+    return res.sendStatus(204);
+  }
+
+  next();
+});
 
 app.use(express.json());
 
@@ -46,7 +53,7 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   }
 
   return res.status(500).json({
-    status: 'error', 
+    status: 'error',
     message: 'Internal server error.'
   });
 });
