@@ -7,7 +7,6 @@ import fileUpload from 'express-fileupload';
 
 const app = express();
 
-app.use(express.json())
 app.use(cors({
     origin: [
         "https://sweetland.vercel.app",
@@ -17,6 +16,9 @@ app.use(cors({
       ],
     credentials: true,
 }))
+
+app.use(express.json())
+
 app.use(fileUpload({
     limits: { fileSize: 50 * 1024 * 1024 }
 }))
