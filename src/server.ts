@@ -1,56 +1,59 @@
-import express, { Request, Response, NextFunction } from 'express'
+import express, { Request, Response, NextFunction } from 'express';
 import { router } from './routes';
-import 'express-async-errors'
+import 'express-async-errors';
 import cors from 'cors';
-import path from 'path'
+import path from 'path';
 import fileUpload from 'express-fileupload';
 
 const app = express();
 
 app.use(cors({
-    origin: [
-        "https://sweetland.vercel.app",
-        "https://sweetland-grcn-projects.vercel.app",
-        "http://localhost:3000",
-        "http://localhost:8081",
-      ],
-    credentials: true,
-}))
+  origin: [
+    "https://sweetland.vercel.app",
+    "https://sweetland-grcn-projects.vercel.app",
+    "http://localhost:3000",
+    "http://localhost:8081",
+  ],
+  credentials: true,
+}));
 
 app.options('*', cors({
-    origin: [
-      "https://sweetland.vercel.app",
-      "https://sweetland-grcn-projects.vercel.app",
-      "http://localhost:3000",
-      "http://localhost:8081",
-    ],
-    credentials: true,
-  }));
+  origin: [
+    "https://sweetland.vercel.app",
+    "https://sweetland-grcn-projects.vercel.app",
+    "http://localhost:3000",
+    "http://localhost:8081",
+  ],
+  credentials: true,
+}));
 
-app.use(express.json())
+
+app.use(express.json());
 
 app.use(fileUpload({
-    limits: { fileSize: 50 * 1024 * 1024 }
-}))
+  limits: { fileSize: 50 * 1024 * 1024 }
+}));
+
 app.use(router);
 
-//access image url ex: localhost:3333/files.image-name.png
- app.use('/files',  express.static(path.resolve(__dirname, '..', 'tmp')))
+app.use('/files', express.static(path.resolve(__dirname, '..', 'tmp')));
 
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
-    if(err instanceof Error) {
-        return res.status(400).json({
-            error: err.message
-        })
-    }
+  if (err instanceof Error) {
+    return res.status(400).json({
+      error: err.message
+    });
+  }
 
-    return res.status(500).json({
-        status: 'error', 
-        message: 'Internal server error.'
-    })
-})
+  return res.status(500).json({
+    status: 'error', 
+    message: 'Internal server error.'
+  });
+});
 
-app.listen(process.env.PORT, () => console.log('online!'))
+
+app.listen(process.env.PORT, () => console.log('online!'));
+
 
 // app.listen(3333, '0.0.0.0', () => {
 //    console.log('Server is running on http://0.0.0.0:3333');
