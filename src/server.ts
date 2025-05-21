@@ -17,6 +17,16 @@ app.use(cors({
     credentials: true,
 }))
 
+app.options('*', cors({
+    origin: [
+      "https://sweetland.vercel.app",
+      "https://sweetland-grcn-projects.vercel.app",
+      "http://localhost:3000",
+      "http://localhost:8081",
+    ],
+    credentials: true,
+  }));
+
 app.use(express.json())
 
 app.use(fileUpload({
