@@ -6,21 +6,27 @@ import path from 'path'
 import fileUpload from 'express-fileupload';
 
 const app = express();
-app.use(cors({
-    origin: [
-        "https://sweetland.vercel.app/",
-        "https://sweetland-grcn-projects.vercel.app/",
-        "http://localhost:3000",
-        "http://localhost:8081",
-      ],
-    credentials: true,
-}))
 
-app.use(express.json())
+const corsOptions = {
+    origin: [
+      "https://sweetland.vercel.app",
+      "https://sweetland-grcn-projects.vercel.app",
+      "http://localhost:3000",
+      "http://localhost:8081",
+    ],
+    credentials: true,
+  };
+
+app.use(cors(corsOptions))
+app.options('*', cors(corsOptions))
+
+app.use(express.json());
+
 
 app.use(fileUpload({
     limits: { fileSize: 50 * 1024 * 1024 }
 }))
+
 app.use(router);
 
 //access image url ex: localhost:3333/files.image-name.png
