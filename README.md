@@ -1,5 +1,5 @@
 
-# 📱 Sweetland - server
+# 📦 Sweetland - server
 
 > 📌 This app is part of a full system integrated with a [web version](https://github.com/grc-softdev/sweetland-client/tree/main) for management.
 
