@@ -32,7 +32,7 @@ This project uses **Prisma ORM** with **PostgreSQL** to manage the backend and d
 
 **Prisma Model**  	            | **Data Flow**
 :------------------------------:|:------------------------------:
-![](public/screenshots/model.png) | ![](public/screenshots/flux.png)
+![](public/screenshot/sweetlandModel.png) | ![](public/screenshot/fluxogram.jpg)
 
 
 
